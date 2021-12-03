@@ -1,0 +1,56 @@
+#include "stdio.h"
+#include "stdlib.h"
+
+int** alocaMatriz(int**, int, int);
+
+int main(){
+	int**mat = NULL;
+	int lin, col;
+
+	printf("Informe o número de linhas e colunas da matriz: \n");
+	scanf("%d %d", &lin, &col);
+
+	mat = alocaMatriz(mat, lin, col);
+
+	for(int i=0; i<lin; i++){
+		for(int j=0; j<col; j++){
+			printf("%d ", mat[i][j]);
+		}
+		printf("\n");
+	}
+
+	if(mat != NULL){
+		for(int i=0; i<lin; i++){
+			free(mat[i]);
+		}
+		free(mat);
+		printf("\nMemoria liberada.");
+	}
+}
+
+int** alocaMatriz(int** matriz, int n, int m){
+
+	matriz = (int**) malloc (n * sizeof(int));
+
+	if(matriz == NULL){ //verificando se foi um sucesso
+		printf("Memmoria insuficiente para linhas");
+		exit(1);
+	}
+
+	for(int i=0; i<n; i++){
+		matriz[i] = (int*) malloc (m * sizeof(int));
+
+		if(matriz == NULL){
+	    	printf("Memmoria insuficiente para colunas");
+	    	exit(1);
+     	}
+	}
+
+		for(int i=0; i<n; i++){
+			for(int j=0; j<m; j++){
+				matriz[i][j] = 0;
+	    	}
+		}
+
+	return matriz;
+}
